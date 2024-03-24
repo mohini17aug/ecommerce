@@ -17,7 +17,9 @@ class SplashActivity : AppCompatActivity() {
         // Using a Handler to delay the transition
         Handler().postDelayed({
             // Start your main activity here
-            startActivity(Intent(this, MainActivity::class.java))
+       /*     startActivity(Intent(this, RegistrationActivity::class.java))
+       */     startActivity(Intent(this, SystemLogin::class.java))
+
             finish() // close this activity
         }, SPLASH_TIME_OUT)
     }

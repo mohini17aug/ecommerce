@@ -1,7 +1,9 @@
 package com.example.firstapp
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -17,7 +19,11 @@ class DashboardActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dashboard)
 
+        val sharedPref = getSharedPreferences("MyApp", Context.MODE_PRIVATE)
+        val name=sharedPref.getString("Name","user")
         recyclerView = findViewById(R.id.recyclerView)
+        val nameView=findViewById<TextView>(R.id.nameTextView)
+        nameView.text="Hello $name ! "
         recyclerView.layoutManager = LinearLayoutManager(this)
         val itemList = listOf( // Dummy data
             Item(1, "Female Fashion", "Description 1", R.drawable.femaleclothing),

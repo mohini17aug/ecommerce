@@ -5,8 +5,19 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp"
-    android:gravity="center">
+    android:gravity="center"
+    android:background="@drawable/gradient_background">
 
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="serif"
+        android:textStyle="italic|bold"
+        android:text="Login"
+        android:textAlignment="center"
+        android:textSize="30dp"
+        android:paddingBottom="40dp"/>
     <EditText
         android:id="@+id/editTextEmailLogin"
         android:layout_width="match_parent"
@@ -24,7 +35,7 @@
 
     <Button
         android:id="@+id/buttonLogin"
-        android:layout_width="wrap_content"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:text="@string/action_sign_in"
         android:layout_marginTop="16dp"/>

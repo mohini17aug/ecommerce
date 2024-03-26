@@ -24,7 +24,7 @@ class DashboardActivity : AppCompatActivity() {
         val name=sharedPref.getString("Name","user")
         recyclerView = findViewById(R.id.recyclerView)
         val nameView=findViewById<TextView>(R.id.nameTextView)
-        nameView.text="Hello $name ! "
+        nameView.text="Welcome $name ! "
         recyclerView.layoutManager = LinearLayoutManager(this)
         itemList = listOf( // Dummy data
             Item(1, "Female Fashion", "Description 1", R.drawable.femaleclothing),

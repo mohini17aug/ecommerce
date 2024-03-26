@@ -1,4 +1,5 @@
 package com.example.firstapp
+import android.util.Log
 import android.view.LayoutInflater
 import com.example.firstapp.data.model.Product
 import android.view.View
@@ -6,9 +7,11 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.firstapp.data.model.Item
 
 class ProductAdapter(private val productList: List<Product>, private val onProductClick: (Product) -> Unit) :
     RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
+    private var newProductList: List<Product> = ArrayList(productList)
 
     class ProductViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val name: TextView = view.findViewById(R.id.product_name)
@@ -30,12 +33,18 @@ class ProductAdapter(private val productList: List<Product>, private val onProdu
     }
 
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
-        val product = productList[position]
+        val product = newProductList[position]
         holder.itemView.setOnClickListener {
             onProductClick(product)
         }
-        holder.bind(productList[position])
+        holder.bind(newProductList[position])
     }
 
-    override fun getItemCount() = productList.size
+    override fun getItemCount() = newProductList.size
+    fun filterList(filteredList: List<Product>) {
+          Log.d("ProductAdapter", "FilterList called $filteredList, item count: ${filteredList.size}")
+
+        newProductList = filteredList
+        notifyDataSetChanged()
+    }
 }

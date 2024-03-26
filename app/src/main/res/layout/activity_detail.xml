@@ -5,6 +5,10 @@
         android:orientation="vertical"
         android:padding="16dp"
         android:background="@drawable/gradient_background">
+    <SearchView
+        android:id="@+id/searchView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/detailRecyclerView"
@@ -17,15 +21,5 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="20sp" />
-<!--
-    <Button
-        android:id="@+id/button_add_to_cart"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/add_to_cart"
-        android:onClick="onAddToCartClicked"/>-->
 
-
-        <!-- Add more views to display other details -->
-
-    </LinearLayout>
+</LinearLayout>

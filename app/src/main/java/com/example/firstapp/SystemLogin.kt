@@ -3,6 +3,7 @@ package com.example.firstapp
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -43,6 +44,7 @@ class SystemLogin : AppCompatActivity() {
         val sharedPref = getSharedPreferences("MyApp", Context.MODE_PRIVATE)
         val registeredUsername = sharedPref.getString("RegisteredUsername", null)
         val registeredPassword = sharedPref.getString("RegisteredPassword", null)
+        Log.d("SystemLogin", "registeredUsername : $registeredUsername")
 
         if (email == registeredUsername && password == registeredPassword) {
             // Credentials match, go to Dashboard

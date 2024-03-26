@@ -20,8 +20,8 @@ class PaymentActivity : AppCompatActivity() {
         setContentView(R.layout.activity_payment)
 
         // Get the passed price from the intent
-        val price = intent.getDoubleExtra("ITEM_PRICE", 0.0)
-        val productName = intent.getStringExtra("ITEM_NAME")
+        val price = intent.getDoubleExtra("PRODUCT_PRICE", 0.0)
+        val productName = intent.getStringExtra("PRODUCT_NAME")
 
         // Set the price in the TextView
         val priceTextView = findViewById<TextView>(R.id.textViewPrice)

@@ -3,12 +3,13 @@ package com.example.firstapp
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.widget.SearchView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.firstapp.data.model.Item
-
+import android.util.Log
 class DashboardActivity : AppCompatActivity() {
 
     private lateinit var recyclerView: RecyclerView
@@ -25,7 +26,7 @@ class DashboardActivity : AppCompatActivity() {
         val nameView=findViewById<TextView>(R.id.nameTextView)
         nameView.text="Hello $name ! "
         recyclerView.layoutManager = LinearLayoutManager(this)
-        val itemList = listOf( // Dummy data
+        itemList = listOf( // Dummy data
             Item(1, "Female Fashion", "Description 1", R.drawable.femaleclothing),
             Item(2, "Male Fashion", "Description 2",R.drawable.maleclothing),
             Item(3, "Kids Fashion", "Fabric 2", R.drawable.childrenclothing),
@@ -41,6 +42,26 @@ class DashboardActivity : AppCompatActivity() {
         }
         recyclerView.adapter = itemAdapter
 
-        // Implement search functionality here
+        val searchView = findViewById<SearchView>(R.id.searchView)
+
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                filterItems(newText)
+                return false
+            }
+        })
+    }
+
+    private fun filterItems(text: String?) {
+         val filteredList = itemList.filter {
+            it.name.contains(text ?: "", ignoreCase = true)
+        }
+       // Log.d("DashboardActivity", "Filtering for query: $text  filtered count: ${filteredList.size}")
+
+        itemAdapter.filterList(filteredList)
     }
 }

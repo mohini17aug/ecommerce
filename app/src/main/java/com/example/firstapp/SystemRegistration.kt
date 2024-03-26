@@ -3,6 +3,7 @@ package com.example.firstapp
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Patterns
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -26,6 +27,10 @@ class SystemRegistration : AppCompatActivity() {
             val email = emailEditText.text.toString()
             val password = passwordEditText.text.toString()
             val name= nameEditText.text.toString()
+            if (!isEmailValid(email)) {
+                emailEditText.error = "Invalid email address"
+                return@setOnClickListener
+            }
             val sharedPref = getSharedPreferences("MyApp", Context.MODE_PRIVATE)
             with(sharedPref.edit()) {
                 putString("RegisteredUsername", email)
@@ -41,5 +46,9 @@ class SystemRegistration : AppCompatActivity() {
             val intent = Intent(this, SystemLogin::class.java)
             startActivity(intent)
         }
+    }
+
+    private fun isEmailValid(email: String): Boolean {
+        return Patterns.EMAIL_ADDRESS.matcher(email).matches()
     }
 }

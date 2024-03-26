@@ -7,9 +7,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.firstapp.data.model.Item
-
+import android.util.Log
 class ItemAdapter(private val itemList: List<Item>, private val clickListener: (Item) -> Unit) :
     RecyclerView.Adapter<ItemAdapter.ItemViewHolder>() {
+    private var newitemList: List<Item> = ArrayList(itemList)
 
     class ItemViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
         fun bind(item: Item, clickListener: (Item) -> Unit) {
@@ -37,8 +38,16 @@ class ItemAdapter(private val itemList: List<Item>, private val clickListener: (
     }
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
-        holder.bind(itemList[position], clickListener)
+        holder.bind(newitemList[position], clickListener)
     }
 
-    override fun getItemCount() = itemList.size
+    override fun getItemCount() = newitemList.size
+
+    // Method to filter the list based on the search query
+    fun filterList(filteredList: List<Item>) {
+      //  Log.d("ItemAdapter", "FilterList called $filteredList, item count: ${filteredList.size}")
+
+        newitemList = filteredList
+        notifyDataSetChanged()
+    }
 }

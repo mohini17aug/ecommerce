@@ -17,7 +17,7 @@
         android:text="Login"
         android:textAlignment="center"
         android:textSize="30dp"
-        android:paddingBottom="40dp"/>
+        android:paddingBottom="30dp"/>
     <EditText
         android:id="@+id/editTextEmailLogin"
         android:layout_width="match_parent"

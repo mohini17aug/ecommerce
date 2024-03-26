@@ -2,6 +2,8 @@ package com.example.firstapp
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
@@ -38,14 +40,30 @@ class PaymentActivity : AppCompatActivity() {
         payButton.setOnClickListener {
             // Simulate payment process
             if (validatePaymentInput(cardNumber, cardExpiry, cvv, cardHolderName)) {
-                Toast.makeText(this, "Payment for $price processed", Toast.LENGTH_LONG).show()
-                // Proceed with payment processing
-                val intent = Intent(this, OrderSummaryActivity::class.java)
-                intent.putExtra("ITEM_NAME", productName)
-                intent.putExtra("ITEM_PRICE", price)
-                startActivity(intent)
-            } else {
-                Toast.makeText(this, "Invalid Payment Details", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "Payment for $price processing", Toast.LENGTH_LONG).show()
+                payButton.setOnClickListener {
+                    if (validatePaymentInput(cardNumber, cardExpiry, cvv, cardHolderName)) {
+                        Toast.makeText(this, "Payment for Rs.$price processing", Toast.LENGTH_LONG)
+                            .show()
+
+                        // Delay for the length of the LONG toast duration
+                        Handler(Looper.getMainLooper()).postDelayed({
+                            Toast.makeText(
+                                this,
+                                "Payment for Rs.$price processed",
+                                Toast.LENGTH_LONG
+                            ).show()
+
+                            // Proceed with opening OrderSummaryActivity
+                            val intent = Intent(this, OrderSummaryActivity::class.java)
+                            intent.putExtra("ITEM_NAME", productName)
+                            intent.putExtra("ITEM_PRICE", price)
+                            startActivity(intent)
+                        }, Toast.LENGTH_LONG.toLong())
+                    } else {
+                        Toast.makeText(this, "Invalid Payment Details", Toast.LENGTH_LONG).show()
+                    }
+                }
             }
         }
     }

@@ -10,6 +10,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.firstapp.data.model.Item
 import android.util.Log
+import android.widget.Button
+import android.widget.ImageView
+
 class DashboardActivity : AppCompatActivity() {
 
     private lateinit var recyclerView: RecyclerView
@@ -54,6 +57,12 @@ class DashboardActivity : AppCompatActivity() {
                 return false
             }
         })
+
+        val orderSummaryButton = findViewById<ImageView>(R.id.orderSummaryButton)
+        orderSummaryButton.setOnClickListener {
+            val intent = Intent(this, OrderSummaryActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun filterItems(text: String?) {

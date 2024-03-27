@@ -1,5 +1,6 @@
 package com.example.firstapp
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
@@ -95,10 +96,17 @@ class PaymentActivity : AppCompatActivity() {
 
                             // Proceed with opening OrderSummaryActivity
                             val intent = Intent(this, OrderSummaryActivity::class.java)
-                            intent.putExtra("ITEM_NAME", productName)
-                            intent.putExtra("ITEM_PRICE", price)
+                            val sharedPref = getSharedPreferences("MyApp", Context.MODE_PRIVATE)
+                            with(sharedPref.edit()) {
+                                putString("ITEM_NAME", productName)
+                                putFloat("ITEM_PRICE", price.toFloat())
+                                 apply()
+                            }
+
+                           /* intent.putExtra("ITEM_NAME", productName)
+                            intent.putExtra("ITEM_PRICE", price)*/
                             startActivity(intent)
-                        }, Toast.LENGTH_LONG.toLong())
+                        },5000)
                     } else {
                         Toast.makeText(this, "Invalid Payment Details", Toast.LENGTH_LONG).show()
                     }

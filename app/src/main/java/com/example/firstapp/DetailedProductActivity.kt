@@ -18,6 +18,7 @@ class DetailedProductActivity : AppCompatActivity() {
     private var quantity=1
     private var productPrice: Double=0.0
     private lateinit var priceTextView: TextView
+    private var toastShownDec=false
     private var toastShown=false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,9 +57,9 @@ class DetailedProductActivity : AppCompatActivity() {
             updatePrice()
         }
         if(quantity == 1){
-            if( !toastShown) {
+            if( !toastShownDec) {
                 Toast.makeText(this, "Items cannot be empty.Minimum quantity is 1", Toast.LENGTH_SHORT).show()
-                toastShown = true;
+                toastShownDec = true;
             }
         }
     }

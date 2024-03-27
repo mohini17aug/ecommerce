@@ -20,7 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/card_number"
-        android:inputType="numberDecimal"
+        android:inputType="number"
         android:maxLength="16"/>
 
     <EditText
@@ -36,7 +36,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/cvv"
-        android:inputType="numberDecimal"
+        android:inputType="number"
         android:maxLength="3"/>
 
     <EditText

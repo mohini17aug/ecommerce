@@ -4,16 +4,18 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import com.google.android.material.snackbar.Snackbar
+import android.text.Editable
+import android.text.InputFilter
+import android.text.TextWatcher
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.navigateUp
-import androidx.navigation.ui.setupActionBarWithNavController
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import java.util.Calendar
+
+import com.example.firstapp.utilities.ExpiryDateTextWatcher
+import com.example.firstapp.utilities.InputFilterMinMax
 
 class PaymentActivity : AppCompatActivity() {
 
@@ -30,8 +32,54 @@ class PaymentActivity : AppCompatActivity() {
         priceTextView.text = String.format("Price: Rs.%.2f", price)
 
         val cardNumber = findViewById<EditText>(R.id.editTextCardNumber)
+        var isCardNumberValid=false
+
+        /*cardNumber.setFilters(arrayOf<InputFilter>(InputFilterMinMax(1000000000000000, 9999999999999999)))
+*/
+        cardNumber.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+            }
+
+            override fun afterTextChanged(s: Editable) {
+                if (s.length == 16) {
+                    isCardNumberValid = true
+                } else
+                    isCardNumberValid = false
+            }
+        })
+
         val cardExpiry = findViewById<EditText>(R.id.editTextCardExpiry)
         val cvv = findViewById<EditText>(R.id.editTextCvv)
+
+        //cardExpiry.addTextChangedListener(ExpiryDateTextWatcher())
+       /* cardExpiry.addTextChangedListener(object : TextWatcher {
+            private var previousInput = ""
+
+            override fun afterTextChanged(s: Editable) {
+                val input = s.toString()
+
+                if (input.length == 2 && previousInput.length < 2) {
+                    // Insert slash after MM when user is typing
+                    s.insert(input.length, "/")
+                } else if (input.length == 3 && previousInput.length == 4) {
+                    // Remove slash if user is deleting characters
+                    s.delete(2, 3)
+                }
+
+                previousInput = input
+            }
+
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
+
+
+        })*/
         val cardHolderName = findViewById<EditText>(R.id.editTextCardHolderName)
 
 
@@ -39,20 +87,11 @@ class PaymentActivity : AppCompatActivity() {
         val payButton = findViewById<Button>(R.id.buttonPay)
         payButton.setOnClickListener {
             // Simulate payment process
-            if (validatePaymentInput(cardNumber, cardExpiry, cvv, cardHolderName)) {
-                Toast.makeText(this, "Payment for $price processing", Toast.LENGTH_LONG).show()
-                payButton.setOnClickListener {
-                    if (validatePaymentInput(cardNumber, cardExpiry, cvv, cardHolderName)) {
-                        Toast.makeText(this, "Payment for Rs.$price processing", Toast.LENGTH_LONG)
-                            .show()
-
+            if (validatePaymentInput(isCardNumberValid, cardNumber, cardExpiry, cvv, cardHolderName)) {
+                Toast.makeText(this, "Payment for $price processing", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Payment for $price processed", Toast.LENGTH_SHORT).show()
                         // Delay for the length of the LONG toast duration
                         Handler(Looper.getMainLooper()).postDelayed({
-                            Toast.makeText(
-                                this,
-                                "Payment for Rs.$price processed",
-                                Toast.LENGTH_LONG
-                            ).show()
 
                             // Proceed with opening OrderSummaryActivity
                             val intent = Intent(this, OrderSummaryActivity::class.java)
@@ -63,14 +102,14 @@ class PaymentActivity : AppCompatActivity() {
                     } else {
                         Toast.makeText(this, "Invalid Payment Details", Toast.LENGTH_LONG).show()
                     }
-                }
-            }
+
         }
     }
 
-    private fun validatePaymentInput(cardNumber: EditText, cardExpiry: EditText, cvv: EditText, cardHolderName: EditText): Boolean {
+    private fun validatePaymentInput(
+        isCardNumberValid:Boolean, cardNumber: EditText, cardExpiry: EditText, cvv: EditText, cardHolderName: EditText): Boolean {
         // Simple validation logic. You should expand this as per your need.
-        return cardNumber.text.isNotBlank() && cardExpiry.text.isNotBlank() && cvv.text.isNotBlank() && cardHolderName.text.isNotBlank()
+        return isCardNumberValid && cardNumber.text.isNotBlank() && cardExpiry.text.isNotBlank() && cvv.text.isNotBlank() && cardHolderName.text.isNotBlank()
     }
 }
 

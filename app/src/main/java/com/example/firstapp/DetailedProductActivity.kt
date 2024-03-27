@@ -55,6 +55,12 @@ class DetailedProductActivity : AppCompatActivity() {
             findViewById<TextView>(R.id.textQuantity).text = quantity.toString()
             updatePrice()
         }
+        if(quantity == 1){
+            if( !toastShown) {
+                Toast.makeText(this, "Items cannot be empty.Minimum quantity is 1", Toast.LENGTH_SHORT).show()
+                toastShown = true;
+            }
+        }
     }
     fun increaseQuantity(view: View) {
         quantity++
